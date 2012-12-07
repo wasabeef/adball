@@ -1,0 +1,53 @@
+#!/bin/bash
+
+status=1
+
+function commandInfo() {
+    echo "Adb All devices installer Version 1.0.0"
+    echo ""
+    echo "device commands:"
+    echo "  adball install [apkfile]"
+    echo "  - push this package file to all devices and install those"
+    echo "  adball uninstall [apkfile]"
+    echo "  - remove this app package from all devices"
+    echo ""
+
+    status=1
+}
+if [ $# -ne 2 ];
+then
+    commandInfo
+    exit $status
+fi
+
+adbpath=$(which adb)
+if [ $? -ne 0 ];
+then
+    echo "adb is not found"
+    echo ""
+    exit $status
+fi
+
+IFS=$'\n'
+command=$1
+apkfile=$2
+deviceList=$(adb devices|grep -v List)
+
+# Support Command is install and uninstall
+if [ ${command} != "install" -a ${command} != "uninstall" ];
+then
+    commandInfo
+    exit $status
+fi
+
+if [ ${#deviceList[@]} -ge 1 ];
+then
+    echo "Error: Device not found"
+    exit $status
+fi
+
+for target in ${array[@]}
+do
+    echo "adb -rs ${target} ${apkfile}"
+    adb -s ${target} ${command} -r ${apkfile}
+done
