@@ -13,24 +13,40 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
+version="1.0.1"
  
 #####
 # Function Definition
 #####
-function commandInfo() {
-    echo "Adb All devices installer Version 1.0.0"
+function versionInfo() {
     echo ""
+    echo "Adb All devices installer Version $version"
+    echo ""
+}
+function commandInfo() {
+    versionInfo
     echo "device commands:"
     echo "  adball install [apkfile]"
-    echo "  - push this package file to all devices and install those"
+    echo "                - push this package file to all devices and install those"
     echo "  adball uninstall [apkfile]"
-    echo "  - remove this app package from all devices"
+    echo "                - remove this app package from all devices"
+    echo "  adball push <local> <remote>"
+    echo "                - copy file/dir to all device"
+    echo "  adball pull <remote> <local>"
+    echo "                - copy file/dir from all device"
     echo ""
-
-    status=1
 }
 # All device install Command
 function installCmd() {
+
+    if [ $# -ne 2 ];
+    then
+        commandInfo
+        status=1
+        exit $status
+    fi
+
     curNum=0
     deviceNum=${#deviceList[@]}
     for target in ${deviceList[@]}
@@ -44,6 +60,14 @@ function installCmd() {
 }
 # All device uninstall Command
 function uninstallCmd() {
+
+    if [ $# -ne 2 ];
+    then
+        commandInfo
+        status=1
+        exit $status
+    fi
+
     curNum=0
     deviceNum=${#deviceList[@]}
     for target in ${deviceList[@]}
@@ -55,27 +79,45 @@ function uninstallCmd() {
         curNum=$((curNum+1))
     done
 }
+# All device push/pull Command
+function pushpullCmd() {
+
+    if [ $# -ne 3 ];
+    then
+        commandInfo
+        status=1
+        exit $status
+    fi
+
+    curNum=0
+    deviceNum=${#deviceList[@]}
+    for target in ${deviceList[@]}
+    do
+        echo Being ${command}ed... $((curNum+1))/$((deviceNum+1))
+        echo "adb -s ${target} ${command} ${srcfile} ${dstfile}"
+        adb -s ${target} ${command} ${srcfile} ${dstfile}
+        echo ""
+        curNum=$((curNum+1))
+    done
+}
 #####
 
 status=0
 IFS=$'\n'
 command=$1
 apkfile=$2
+srcfile=$2
+dstfile=$3
+
 packageName=$(aapt dump badging test.apk|grep package|awk '{print $2}'|awk -F"'" '{print $2}')
 deviceList=$(adb devices|grep -v List|awk '{print $1}')
-
-
-if [ $# -ne 2 ];
-then
-    commandInfo
-    exit $status
-fi
 
 adbpath=$(which adb)
 if [ $? -ne 0 ];
 then
     echo "adb is not found"
     echo ""
+    status=1
     exit $status
 fi
 
@@ -89,13 +131,31 @@ fi
 case ${command} in
     "install")
         installCmd
+        status=0
     ;;
     "uninstall")
         uninstallCmd
+        status=0
+    ;;
+    "push")
+        pushpullCmd
+        status=0
+    ;;
+    "pull")
+        pushpullCmd
+        status=0
+    ;;
+    "help")
+        commandInfo
+        status=0
+    ;;
+    "version")
+        versionInfo
+        status=0
     ;;
     *)
         commandInfo
-        exit $status
+        status=1
     ;;
 esac
 
