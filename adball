@@ -56,3 +56,5 @@ do
     echo ""
     curNum=$((curNum+1))
 done
+
+exit $status
