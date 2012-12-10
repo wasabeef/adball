@@ -111,7 +111,7 @@ srcfile=$2
 dstfile=$3
 deviceList=$(adb devices|grep -v List|awk '{print $1}')
 
-adbpath=$(which adb)
+which adb > /dev/null 2>&1
 if [ $? -ne 0 ];
 then
     echo "adb is not found"
