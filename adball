@@ -31,7 +31,7 @@ fi
 IFS=$'\n'
 command=$1
 apkfile=$2
-deviceList=$(adb devices|grep -v List)
+deviceList=$(adb devices|grep -v List|awk '{print $1}')
 
 # Support Command is install and uninstall
 if [ ${command} != "install" -a ${command} != "uninstall" ];
@@ -40,14 +40,16 @@ then
     exit $status
 fi
 
-if [ ${#deviceList[@]} -ge 1 ];
+if [ ${#deviceList[@]} -eq 0 ];
 then
+    echo ${#deviceList[@]}
     echo "Error: Device not found"
     exit $status
 fi
 
-for target in ${array[@]}
+for target in ${deviceList[@]}
 do
-    echo "adb -rs ${target} ${apkfile}"
+    echo "adb -s ${target} ${command} -r ${apkfile}"
     adb -s ${target} ${command} -r ${apkfile}
+    echo ""
 done
