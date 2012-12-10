@@ -68,6 +68,7 @@ function uninstallCmd() {
         exit $status
     fi
 
+    packageName=$(aapt dump badging ${apkfile}|grep package|awk '{print $2}'|awk -F"'" '{print $2}')
     curNum=0
     deviceNum=${#deviceList[@]}
     for target in ${deviceList[@]}
@@ -108,8 +109,6 @@ command=$1
 apkfile=$2
 srcfile=$2
 dstfile=$3
-
-packageName=$(aapt dump badging test.apk|grep package|awk '{print $2}'|awk -F"'" '{print $2}')
 deviceList=$(adb devices|grep -v List|awk '{print $1}')
 
 adbpath=$(which adb)
