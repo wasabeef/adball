@@ -11,7 +11,10 @@ Adb All devices command
 ## Usage
 
 Install
+
     ./adball install Sample.apk
 
+
 Uninstall
+
     ./adball uninstall Sample.apk
