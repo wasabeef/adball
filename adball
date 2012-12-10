@@ -80,11 +80,11 @@ packageName=$(aapt dump badging test.apk | grep package | awk '{print $2}' | awk
 deviceList=$(adb devices|grep -v List|awk '{print $1}')
 
 # Support Command is install and uninstall
-if [ ${command} != "install" -a ${command} != "uninstall" ];
-then
-    commandInfo
-    exit $status
-fi
+#if [ ${command} != "install" -a ${command} != "uninstall" ];
+#then
+#    commandInfo
+#    exit $status
+#fi
 
 if [ ${#deviceList[@]} -eq 0 ];
 then
@@ -100,6 +100,10 @@ case ${command} in
 ;;
 "uninstall")
     uninstallCmd
+;;
+*)
+    commandInfo
+    exit $status
 ;;
 esac
 
