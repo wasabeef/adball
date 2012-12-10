@@ -47,10 +47,12 @@ then
 fi
 
 curNum=0
+deviceNum=${#deviceList[@]}
 for target in ${deviceList[@]}
 do
-    echo Being installed... $curNum/${#deviceList[@]}
+    echo Being installed... $((curNum+1))/$((deviceNum+1))
     echo "adb -s ${target} ${command} -r ${apkfile}"
     adb -s ${target} ${command} -r ${apkfile}
     echo ""
+    curNum=$((curNum+1))
 done
