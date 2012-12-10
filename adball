@@ -1,6 +1,6 @@
 #!/bin/bash
 
-status=1
+status=0
 
 function commandInfo() {
     echo "Adb All devices installer Version 1.0.0"
