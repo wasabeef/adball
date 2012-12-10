@@ -42,13 +42,14 @@ fi
 
 if [ ${#deviceList[@]} -eq 0 ];
 then
-    echo ${#deviceList[@]}
     echo "Error: Device not found"
     exit $status
 fi
 
+curNum=0
 for target in ${deviceList[@]}
 do
+    echo Being installed... $curNum/${#deviceList[@]}
     echo "adb -s ${target} ${command} -r ${apkfile}"
     adb -s ${target} ${command} -r ${apkfile}
     echo ""
