@@ -3,7 +3,7 @@ adball
 
 Adb All devices command
 
-## Install
+## Need
 
 * Download the [Android SDK](http://developer.android.com/sdk/index.html)
 
