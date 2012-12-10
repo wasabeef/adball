@@ -29,7 +29,7 @@ function commandInfo() {
 
     status=1
 }
-# All device install process
+# All device install Command
 function installCmd() {
     curNum=0
     deviceNum=${#deviceList[@]}
@@ -42,7 +42,7 @@ function installCmd() {
         curNum=$((curNum+1))
     done
 }
-# All device uninstall process
+# All device uninstall Command
 function uninstallCmd() {
     curNum=0
     deviceNum=${#deviceList[@]}
@@ -58,6 +58,12 @@ function uninstallCmd() {
 #####
 
 status=0
+IFS=$'\n'
+command=$1
+apkfile=$2
+packageName=$(aapt dump badging test.apk|grep package|awk '{print $2}'|awk -F"'" '{print $2}')
+deviceList=$(adb devices|grep -v List|awk '{print $1}')
+
 
 if [ $# -ne 2 ];
 then
@@ -73,19 +79,6 @@ then
     exit $status
 fi
 
-IFS=$'\n'
-command=$1
-apkfile=$2
-packageName=$(aapt dump badging test.apk | grep package | awk '{print $2}' | awk -F"'" '{print $2}')
-deviceList=$(adb devices|grep -v List|awk '{print $1}')
-
-# Support Command is install and uninstall
-#if [ ${command} != "install" -a ${command} != "uninstall" ];
-#then
-#    commandInfo
-#    exit $status
-#fi
-
 if [ ${#deviceList[@]} -eq 0 ];
 then
     echo "Error: Device not found"
@@ -94,17 +87,16 @@ then
 fi
 
 case ${command} in
-
-"install")
-    installCmd
-;;
-"uninstall")
-    uninstallCmd
-;;
-*)
-    commandInfo
-    exit $status
-;;
+    "install")
+        installCmd
+    ;;
+    "uninstall")
+        uninstallCmd
+    ;;
+    *)
+        commandInfo
+        exit $status
+    ;;
 esac
 
 exit $status
