@@ -32,9 +32,9 @@ function commandInfo() {
     echo "  adball uninstall [apkfile]"
     echo "                - remove this app package from all devices"
     echo "  adball push <local> <remote>"
-    echo "                - copy file/dir to all device"
+    echo "                - copy file/dir to all devices"
     echo "  adball pull <remote> <local>"
-    echo "                - copy file/dir from all device"
+    echo "                - copy file/dir from all devices"
     echo ""
 }
 # All device install Command
