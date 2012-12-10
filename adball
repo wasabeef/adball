@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # Copyright (C) 2012 D.Furiya
 # 
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -40,7 +39,7 @@ function commandInfo() {
 # All device install Command
 function installCmd() {
 
-    if [ $# -ne 2 ];
+    if [ ${argc} -ne 2 ];
     then
         commandInfo
         status=1
@@ -51,7 +50,7 @@ function installCmd() {
     deviceNum=${#deviceList[@]}
     for target in ${deviceList[@]}
     do
-        echo Being installed... $((curNum+1))/$((deviceNum+1))
+        echo Being installed... $((curNum+1))/$((deviceNum))
         echo "adb -s ${target} ${command} -r ${apkfile}"
         adb -s ${target} ${command} -r ${apkfile}
         echo ""
@@ -61,7 +60,7 @@ function installCmd() {
 # All device uninstall Command
 function uninstallCmd() {
 
-    if [ $# -ne 2 ];
+    if [ ${argc} -ne 2 ];
     then
         commandInfo
         status=1
@@ -73,7 +72,7 @@ function uninstallCmd() {
     deviceNum=${#deviceList[@]}
     for target in ${deviceList[@]}
     do
-        echo Being uninstalled... $((curNum+1))/$((deviceNum+1))
+        echo Being uninstalled... $((curNum+1))/$((deviceNum))
         echo "adb -s ${target} ${command} ${packageName}"
         adb -s ${target} ${command} ${packageName}
         echo ""
@@ -83,7 +82,7 @@ function uninstallCmd() {
 # All device push/pull Command
 function pushpullCmd() {
 
-    if [ $# -ne 3 ];
+    if [ ${argc} -ne 3 ];
     then
         commandInfo
         status=1
@@ -94,7 +93,7 @@ function pushpullCmd() {
     deviceNum=${#deviceList[@]}
     for target in ${deviceList[@]}
     do
-        echo Being ${command}ed... $((curNum+1))/$((deviceNum+1))
+        echo Being ${command}ed... $((curNum+1))/$((deviceNum))
         echo "adb -s ${target} ${command} ${srcfile} ${dstfile}"
         adb -s ${target} ${command} ${srcfile} ${dstfile}
         echo ""
@@ -105,6 +104,7 @@ function pushpullCmd() {
 
 status=0
 IFS=$'\n'
+argc=$#
 command=$1
 apkfile=$2
 srcfile=$2
