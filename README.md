@@ -17,16 +17,20 @@ Android SDK Enviroment Path Setting
 Install
 
     ./adball install Sample.apk
+    // adball install [apkfile]
 
 
 Uninstall
 
     ./adball uninstall Sample.apk
+    // adball uninstall [apkfile]
     
 push
 
     ./adball push /yourpath/sample.txt /sdcard/
+    // adball push [local] [remote]
     
 pull
     
     ./adball pull /sdcard/myDog.png ./
+    // adball push [remote] [local]
