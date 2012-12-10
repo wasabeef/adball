@@ -7,7 +7,7 @@ Adb All devices command
 
 * Download the [Android SDK](http://developer.android.com/sdk/index.html)
 
-Android SDK Enviroment Path Setting
+Android SDK Environment Path Setting
 
     export PATH=$PATH:${android_sdk}/platform-tools/
     // ${android_sdk} refers to your android sdk root folder
