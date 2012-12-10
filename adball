@@ -25,6 +25,7 @@ if [ $? -ne 0 ];
 then
     echo "adb is not found"
     echo ""
+    status=1
     exit $status
 fi
 
