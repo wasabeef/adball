@@ -3,11 +3,14 @@ adball
 
 Adb All devices command
 
-## Need
+## Requirements
 
 * Download the [Android SDK](http://developer.android.com/sdk/index.html)
-* ADB path:
-    export PATH=$PATH:/ANDROID_SDK_HOME/platform-tools/
+
+Android SDK Enviroment Path Setting
+
+    export PATH=$PATH:${android_sdk}/platform-tools/
+    // ${android_sdk} refers to your android sdk root folder
 
 ## Usage
 
@@ -19,3 +22,11 @@ Install
 Uninstall
 
     ./adball uninstall Sample.apk
+    
+push
+
+    ./adball push /yourpath/sample.txt /sdcard/
+    
+pull
+    
+    ./adball pull /sdcard/myDog.png ./
