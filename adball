@@ -111,6 +111,7 @@ srcfile=$2
 dstfile=$3
 deviceList=$(adb devices|grep -v List|awk '{print $1}')
 
+# Android SDK Environment Path Check
 which adb > /dev/null 2>&1
 if [ $? -ne 0 ];
 then
@@ -120,6 +121,7 @@ then
     exit $status
 fi
 
+# Device Check
 if [ ${#deviceList[@]} -eq 0 ];
 then
     echo "Error: Device not found"
