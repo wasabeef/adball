@@ -34,3 +34,13 @@ pull
     
     ./adball pull /sdcard/myDog.png ./
     // adball push [remote] [local]
+    
+help
+
+    ./adball help
+
+version
+
+    ./adball version
+    
+    
