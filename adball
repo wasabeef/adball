@@ -34,6 +34,10 @@ function commandInfo() {
     echo "                - copy file/dir to all devices"
     echo "  adball pull <remote> <local>"
     echo "                - copy file/dir from all devices"
+    echo "  adball help"
+    echo "                - show this help message"
+    echo "  adball version"
+    echo "                - show version num"
     echo ""
 }
 # All device install Command
